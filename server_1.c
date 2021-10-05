@@ -16,7 +16,7 @@ int main() {
         int nombre_aleatoire = rand() % 100 + 1;
         printf("nombre aleatoire : %i \n", nombre_aleatoire);
 
-        sleep(3);
+        sleep(1);
     }
     printf("success ! \n");
 
