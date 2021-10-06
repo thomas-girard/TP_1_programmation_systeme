@@ -2,6 +2,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <signal.h>
+#include <sys/wait.h>
 
 //Question 1.2 :
 // kill -s INT : le message 'success' est affiché
@@ -21,7 +22,11 @@
 // Question 2.1
 // Le processus père du fils vaut est le pid fils du processus père, donc tout est bon : ils n'ont pas même PID et on peut donc les distinguer
 // Les processus s'arrêtent avec ctr +c
-//
+// en tuant le processus fils puis ps a : on a un message <defunct> qui apparait pour le processus fils (et on a la lettre Z+ pour zombie)
+// En tuant le père : avec ps a : on a plus ni processus pere ni fils, les messages
+// avec la fonction wait //
+// en tuant le fils avec kill sans argument, le pere s'execute alors, et on voit le message de fin d'éxecution du fils
+// en tuant le fils avec kill -9, on a plus le message de fin d'exécution du fils
 
 
 int running = 1;
@@ -46,6 +51,8 @@ int main() {
 
     pid_t pid = fork();
 
+    wait(NULL);
+
     while(running == 1) {
         printf("hello world \n");
 
@@ -58,7 +65,7 @@ int main() {
         int nombre_aleatoire = rand() % 100;
         printf("nombre aleatoire : %i \n", nombre_aleatoire);
 
-        sleep(1);
+        sleep(3);
 
     }
     printf("success ! \n");
