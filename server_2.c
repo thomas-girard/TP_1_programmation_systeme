@@ -6,11 +6,12 @@
 //Question 1.2 :
 // kill -s INT : le message 'success' est affiché
 // sans le "-s INT" pour kill: le message 'success' ne s'affiche pas
-
-// Question 1.2 (suivante)
+// suite de 1.2 :
 // kill avec l'option -s INT affiche le message
 // kill avec le PID du père sans option n'affiche pas le message
 // kill avec le PID du père avec l'option "-s KILL" fait crasher la fenêtre du bash
+// il est impossible d'afficher un message avec -s KILL
+//sans modifier la variable running : ctr + c tue le programme // kill sans option tue le programme // kill -9 tue le programme sans message de fin
 
 int running = 1;
 
