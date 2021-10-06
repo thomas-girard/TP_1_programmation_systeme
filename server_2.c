@@ -9,8 +9,8 @@
 
 // Question 1.2 (suivante)
 // kill avec l'option -s INT affiche le message
-// kill avec le PID du père sans option ne fait rien
-// kill avec le PID du père avec l'option "-s INT" ne fait rien non plus
+// kill avec le PID du père sans option n'affiche pas le message
+// kill avec le PID du père avec l'option "-s KILL" fait crasher la fenêtre du bash
 
 int running = 1;
 
