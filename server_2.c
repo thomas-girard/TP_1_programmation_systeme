@@ -7,6 +7,11 @@
 // kill -s INT : le message 'success' est affiché
 // sans le "-s INT" pour kill: le message 'success' ne s'affiche pas
 
+// Question 1.2 (suivante)
+// kill avec l'option -s INT affiche le message
+// kill avec le PID du père sans option ne fait rien
+// kill avec le PID du père avec l'option "-s INT" ne fait rien non plus
+
 int running = 1;
 
 void stop_handler(int sig) {
