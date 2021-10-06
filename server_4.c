@@ -53,18 +53,6 @@ int main() {
 
     int valeur_entree=666;
 
-    if(pid != 0) {  //pere
-        close(fds[0]);
-        write(fds[1], &valeur_entree , sizeof(valeur_entree));
-        }
-    else {   //fils
-        close(fds[1]);
-        dup2(fds[0], STDIN_FILENO);
-        int valeur_retour;
-        read(fds[0], &valeur_retour , sizeof(valeur_retour));
-        printf("valeur reçu par le fils %i \n", valeur_retour);
-    }
-
     //int retour =0;
 
     //wait(&retour);
@@ -88,8 +76,20 @@ int main() {
         int pid_pere = getppid();
         printf("pid pere vaut : %i \n", pid_pere);
 
-        int nombre_aleatoire = rand() % 100;
-        printf("nombre aleatoire : %i \n", nombre_aleatoire);
+        // int nombre_aleatoire = rand() % 100;
+        // printf("nombre aleatoire : %i \n", nombre_aleatoire);
+
+        if(pid != 0) {  //pere
+            close(fds[0]);
+            write(fds[1], &valeur_entree , sizeof(valeur_entree));
+            }
+        else {   //fils
+            close(fds[1]);
+            dup2(fds[0], STDIN_FILENO);
+            int valeur_retour;
+            read(fds[0], &valeur_retour , sizeof(valeur_retour));
+            printf("valeur reçu par le fils %i \n", valeur_retour);
+        }
 
         sleep(3);
 
