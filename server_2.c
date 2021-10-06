@@ -3,6 +3,10 @@
 #include <stdlib.h>
 #include <signal.h>
 
+//Question 1.2 :
+// kill -s INT : le message 'success' est affiché
+// sans le "-s INT" pour kill: le message 'success' ne s'affiche pas
+
 int running = 1;
 
 void stop_handler(int sig) {
@@ -15,6 +19,7 @@ int main() {
     struct sigaction action;
     action.sa_handler = stop_handler;
     sigaction(SIGINT, &action, NULL);
+    sigaction(SIGTERM, &action, NULL);
 
     while(running == 1) {
         printf("hello world \n");
