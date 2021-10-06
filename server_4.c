@@ -46,23 +46,38 @@ int main() {
 
     int cr = atexit( exit_message );
 
+    int fds[2];
+    pipe(fds);
+
     pid_t pid = fork();
 
-    int retour =0;
+    int valeur_entree=666;
 
-    wait(&retour);
-
-    if (pid != 0) {
-        printf("type arrêt  : %i \n", retour);
-
-        if (retour == 9) {
-            printf("kill avec kill -9 \n");
+    if(pid != 0) {  //pere
+        close(fds[0]);
+        write(fds[1], &valeur_entree , sizeof(valeur_entree));
         }
-
-        if (retour == 0) {
-            printf("kill avec kill sans argument \n");
-        }
+    else {   //fils
+        close(fds[1]);
+        dup2(fds[0], STDIN_FILENO);
+        int valeur_retour;
+        read(fds[0], &valeur_retour , sizeof(valeur_retour));
+        printf("valeur reçu par le fils %i \n", valeur_retour);
     }
+
+    //int retour =0;
+
+    //wait(&retour);
+
+    // if (pid != 0) {
+    //     printf("type arrêt  : %i \n", retour);
+    //     if (retour == 9) {
+    //         printf("kill avec kill -9 \n");
+    //     }
+    //     if (retour == 0) {
+    //         printf("kill avec kill sans argument \n");
+    //     }
+    // }
 
     while(running == 1) {
         printf("hello world \n");
