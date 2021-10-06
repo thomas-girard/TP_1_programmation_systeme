@@ -51,7 +51,7 @@ int main() {
 
     pid_t pid = fork();
 
-    int valeur_entree=666;
+    //int valeur_entree=666;
 
     //int retour =0;
 
@@ -79,16 +79,19 @@ int main() {
         // int nombre_aleatoire = rand() % 100;
         // printf("nombre aleatoire : %i \n", nombre_aleatoire);
 
+        int valeur_entree=rand() % 100;
+
         if(pid != 0) {  //pere
             close(fds[0]);
             write(fds[1], &valeur_entree , sizeof(valeur_entree));
+            printf("processus pere, valeur envoyee : %i \n", valeur_entree);
             }
         else {   //fils
             close(fds[1]);
             dup2(fds[0], STDIN_FILENO);
             int valeur_retour;
             read(fds[0], &valeur_retour , sizeof(valeur_retour));
-            printf("valeur reçu par le fils %i \n", valeur_retour);
+            printf("processus fils, valeur reçue : %i \n", valeur_retour);
         }
 
         sleep(3);
