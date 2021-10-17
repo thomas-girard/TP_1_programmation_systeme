@@ -20,10 +20,16 @@
 // avec kill -9 : fonction atexit pas activée
 
 // Question 2.1
-// Le processus père du fils vaut est le pid fils du processus père, donc tout est bon : ils n'ont pas même PID et on peut donc les distinguer
+// Le processus père du fils vaut est le pid du processus père, donc tout est bon : ils n'ont pas même PID et on peut donc les distinguer
 // Les processus s'arrêtent avec ctr +c
 // en tuant le processus fils puis ps a : on a un message <defunct> qui apparait pour le processus fils (et on a la lettre Z+ pour zombie)
 // En tuant le père : avec ps a : on a plus ni processus pere ni fils, les messages
+
+// Question 2.2
+// Quand on arrête le fils (celui qui écoute), ça arrête le père
+// Quand on arrête le père (celui qui parle), ça n'arrête pas le fils
+
+//getppid + getkill
 
 
 int running = 1;
@@ -68,7 +74,7 @@ int main() {
     // }
 
     while(running == 1) {
-        printf("hello world \n");
+        //printf("hello world \n");
 
         int pid_fils = getpid();
         printf("pid fils vaut : %i \n", pid_fils);
@@ -85,6 +91,7 @@ int main() {
             close(fds[0]);
             write(fds[1], &valeur_entree , sizeof(valeur_entree));
             printf("processus pere, valeur envoyee : %i \n", valeur_entree);
+            sigaction(SIGPIPE, &action, NULL); //permet au père d'afficher les messages du fils quand on tue le fils en premier
             }
         else {   //fils
             close(fds[1]);
@@ -92,6 +99,10 @@ int main() {
             int valeur_retour;
             read(fds[0], &valeur_retour , sizeof(valeur_retour));
             printf("processus fils, valeur reçue : %i \n", valeur_retour);
+            //printf("101 pid pere = %i \n", getppid());
+            if (getppid() == 1) { //le père a été tué, il faut tuer le fils
+                return EXIT_SUCCESS;
+            }
         }
 
         sleep(3);

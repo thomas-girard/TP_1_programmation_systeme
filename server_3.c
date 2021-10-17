@@ -20,7 +20,7 @@
 // avec kill -9 : fonction atexit pas activée
 
 // Question 2.1
-// Le processus père du fils vaut est le pid fils du processus père, donc tout est bon : ils n'ont pas même PID et on peut donc les distinguer
+// Le processus père du fils vaut est le pid du processus père, donc tout est bon : ils n'ont pas même PID et on peut donc les distinguer
 // Les processus s'arrêtent avec ctr +c
 // en tuant le processus fils puis ps a : on a un message <defunct> qui apparait pour le processus fils (et on a la lettre Z+ pour zombie)
 // En tuant le père : avec ps a : on a plus ni processus pere ni fils, les messages
