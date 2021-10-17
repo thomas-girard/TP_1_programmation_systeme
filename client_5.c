@@ -30,19 +30,13 @@ int main() {
     int cr = atexit( exit_message );
 
     char * fifo = "fifo_q3";
-    //mkfifo(fifo, 0666);
     int file;
-    //file = open(fifo, O_WRONLY);
     file = open(fifo, O_RDONLY);
 
 
     while (running == 1) {
-        int pid_fils = getpid();
-        printf("pid vaut : %i \n", pid_fils);
-        //int nombre_aleatoire = rand() % 100;
-        //printf("nombre aleatoire : %i \n", nombre_aleatoire);
-
-        //write(file, &nombre_aleatoire, sizeof(nombre_aleatoire));
+        int pid_programme = getpid();
+        printf("pid vaut : %i \n", pid_programme);
         int valeur_retour;
         ssize_t size_read = read(file, & valeur_retour, sizeof(valeur_retour)); //a read() with a count of 0 returns zero
         printf("la valeur reçue par le client est : %i \n", valeur_retour);

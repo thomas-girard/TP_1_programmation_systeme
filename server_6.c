@@ -27,12 +27,8 @@ void exit_message() {
     printf("message de exit_message \n");
 }
 
-// this function comes from https://www.geeksforgeeks.org/tcp-server-client-implementation-in-c/
-// Function designed for chat between client and server.
-void func(int sockfd)
-{
+// code inspiré de cet exemple : https://www.geeksforgeeks.org/tcp-server-client-implementation-in-c/
 
-}
 
 int main() {
 
@@ -91,8 +87,8 @@ int main() {
 
     while (running == 1) {
 
-        int pid_fils = getpid();
-        printf("pid vaut : %i \n", pid_fils);
+        int pid_programme = getpid();
+        printf("pid vaut : %i \n", pid_programme);
         int nombre_aleatoire = rand() % 100;
         printf("le serveur envoie la valeur :  %i \n", nombre_aleatoire);
         buff = nombre_aleatoire;

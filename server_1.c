@@ -7,8 +7,8 @@ int main() {
     while(1) {
         printf("hello world \n");
 
-        int pid_fils = getpid();
-        printf("pid fils vaut : %i \n", pid_fils);
+        int pid_programme = getpid();
+        printf("pid vaut : %i \n", pid_programme);
 
         int pid_pere = getppid();
         printf("pid pere vaut : %i \n", pid_pere);

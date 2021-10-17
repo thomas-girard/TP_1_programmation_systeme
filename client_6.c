@@ -27,12 +27,6 @@ void exit_message() {
 }
 
 
-void func(int sockfd)
-{
-
-}
-
-
 int main() {
 
     struct sigaction action;
