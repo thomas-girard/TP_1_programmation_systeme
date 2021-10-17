@@ -7,6 +7,12 @@
 #include <string.h>
 #include <fcntl.h>
 #include <sys/stat.h>
+#include <netdb.h>
+#include <sys/socket.h>
+
+
+#define PORT 8080
+#define SA struct sockaddr
 
 
 int running = 1;
@@ -20,6 +26,13 @@ void exit_message() {
     printf("message de exit_message \n");
 }
 
+
+void func(int sockfd)
+{
+
+}
+
+
 int main() {
 
     struct sigaction action;
@@ -29,33 +42,43 @@ int main() {
 
     int cr = atexit( exit_message );
 
-    char * fifo = "fifo_q3";
-    //mkfifo(fifo, 0666);
-    int file;
-    //file = open(fifo, O_WRONLY);
-    file = open(fifo, O_RDONLY);
+    int sockfd, connfd;
+    struct sockaddr_in servaddr, cli;
 
+    // socket create and varification
+    sockfd = socket(AF_INET, SOCK_STREAM, 0);
+    if (sockfd == -1) {
+        printf("socket creation failed...\n");
+        exit(0);
+    }
+    else
+        printf("Socket successfully created..\n");
+    bzero(&servaddr, sizeof(servaddr));
 
-    while (running == 1) {
-        int pid_fils = getpid();
-        printf("pid vaut : %i \n", pid_fils);
-        //int nombre_aleatoire = rand() % 100;
-        //printf("nombre aleatoire : %i \n", nombre_aleatoire);
+    // assign IP, PORT
+    servaddr.sin_family = AF_INET;
+    servaddr.sin_addr.s_addr = inet_addr("127.0.0.1");
+    servaddr.sin_port = htons(PORT);
 
-        //write(file, &nombre_aleatoire, sizeof(nombre_aleatoire));
-        int valeur_retour;
-        ssize_t size_read = read(file, & valeur_retour, sizeof(valeur_retour)); //a read() with a count of 0 returns zero
-        printf("la valeur reçue par le client est : %i \n", valeur_retour);
-        //sigaction(SIGPIPE, &action, NULL); ne sert que à l'écriture, pas à la lecture
+    // connect the client socket to server socket
+    if (connect(sockfd, (SA*)&servaddr, sizeof(servaddr)) != 0) {
+        printf("connection with the server failed...\n");
+        exit(0);
+    }
+    else
+        printf("connected to the server..\n");
 
-        if (size_read== 0) {
-            return EXIT_SUCCESS;
-        }
+    // function for chat
+    int buff;
+    while (running==1) {
 
+        read(sockfd, &buff, sizeof(buff));
+        printf("le client reçoit la valeur : %i \n", buff);
         sleep(3);
     }
 
-    close(file);
+    // close the socket
+    close(sockfd);
     printf("success ! \n");
 
     return EXIT_SUCCESS; //constante qui vaut 0
